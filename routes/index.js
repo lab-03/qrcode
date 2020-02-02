@@ -1,6 +1,6 @@
 import { Router } from "express";
-import Controller from "../controllers/controller";
+import controller from "../controllers/index";
 const routes = Router();
-routes.post("/create", (req, res) => Controller.createQrCode(req, res));
+routes.post("/create", (req, res) => controller.createQrCode(req, res));
 
 export default routes;

@@ -1,7 +1,6 @@
-"use strict";
 module.exports = (sequelize, DataTypes) => {
-  const lecture_info = sequelize.define(
-    "lecture_info",
+  const lecture_infos = sequelize.define(
+    "lecture_infos",
     {
       location: {
         type: DataTypes.GEOMETRY("POINT", 4326),
@@ -18,8 +17,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {}
   );
-  lecture_info.associate = function(models) {
+  lecture_infos.associate = function(models) {
     // associations can be defined here
   };
-  return lecture_info;
+  return lecture_infos;
 };
