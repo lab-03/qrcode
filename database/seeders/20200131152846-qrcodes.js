@@ -16,7 +16,7 @@ module.exports = {
     let point1 = { type: "Point", coordinates: [39.807222, -76.984722] };
     let point2 = { type: "Point", coordinates: [10.077905, -11.548469] };
     return queryInterface.bulkInsert(
-      "lecture_infos",
+      "qrcodes",
       [
         {
           instructor_id: "5",
@@ -44,6 +44,6 @@ module.exports = {
       Example:
       return queryInterface.bulkDelete('People', null, {});
     */
-    return queryInterface.bulkDelete("lecture_infos", null, {});
+    return queryInterface.bulkDelete("qrcodes", null, {});
   }
 };
