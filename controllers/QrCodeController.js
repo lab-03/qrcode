@@ -7,7 +7,6 @@ class QrCodeController {
   static async getAllQrCodes(req, res) {
     try {
       const data = await QrCodesService.getAllQrCodes();
-      console.log(data);
       if (data.length > 0) {
         util.setSuccess(200, "qrcode information retrieved", data);
       } else {

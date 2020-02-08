@@ -1,11 +1,12 @@
 const QRCode = require("qrcode");
 import Util from "../utils/Utils";
+import QrCodesService from "../services/QrCodesService";
 
 const util = new Util();
 
-class Controller {
+class MainController {
   async generateQrCode(data) {
-    console.log(data);
+    // console.log(data);
     return await QRCode.toDataURL(JSON.stringify(data), {
       toSJISFunc: QRCode.toSJIS
     })
@@ -26,12 +27,13 @@ class Controller {
     // console.log(this.pairingFunction(instructorId, courseId));
     try {
       let code = await this.generateQrCode({
-        longitude: longitude,
-        latitude: latitude,
+        // longitude: longitude,
+        // latitude: latitude,
         instructorId: instructorId,
         courseId: courseId
         // salt: salt
       });
+      await QrCodesService.addQrCode(req.body);
       util.setSuccess(200, "qrcode created", code);
       return util.send(res);
     } catch (err) {
@@ -41,5 +43,5 @@ class Controller {
     }
   }
 }
-const mainController = new Controller();
+const mainController = new MainController();
 export default mainController;
