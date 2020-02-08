@@ -12,11 +12,11 @@ module.exports = {
         type: Sequelize.GEOMETRY("POINT", 4326),
         allowNull: false
       },
-      instructor_id: {
+      instructorId: {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      course_id: {
+      courseId: {
         type: Sequelize.INTEGER,
         allowNull: false
       },
