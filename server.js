@@ -1,7 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
-import qrRoutes from "./routes/index";
-import lecInfoRoutes from "./routes/lecInfoRoutes.js";
+import mainRoutes from "./routes/index";
+import qrCodeRoutes from "./routes/qrcodes";
 
 const cors = require("cors");
 
@@ -12,8 +12,8 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use("/api/qrcode", qrRoutes);
-app.use("/api/lec", lecInfoRoutes);
+app.use("/api", mainRoutes);
+app.use("/api/qrcodes", qrCodeRoutes);
 
 // create a server using port 5000
 const PORT = process.env.PORT || 5000;

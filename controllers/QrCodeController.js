@@ -1,15 +1,15 @@
-import LectureInfoService from "../services/LectureInfosService";
+import QrCodesService from "../services/QrCodesService";
 import Util from "../utils/Utils";
 
 const util = new Util();
 
-class LectureInfoController {
-  static async getAllLectureInfos(req, res) {
+class QrCodeController {
+  static async getAllQrCodes(req, res) {
     try {
-      const data = await LectureInfoService.getAllLectureInfos();
+      const data = await QrCodesService.getAllQrCodes();
       console.log(data);
       if (data.length > 0) {
-        util.setSuccess(200, "lecture information retrieved", data);
+        util.setSuccess(200, "qrcode information retrieved", data);
       } else {
         util.setSuccess(200, "No information found");
       }
@@ -22,4 +22,4 @@ class LectureInfoController {
   }
 }
 
-export default LectureInfoController;
+export default QrCodeController;
