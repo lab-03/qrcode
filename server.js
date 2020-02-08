@@ -1,7 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import mainRoutes from "./routes/index";
-import qrCodeRoutes from "./routes/qrcodes";
+import qrCodeRoutes from "./routes/QrCodeRoutes";
 
 const cors = require("cors");
 
