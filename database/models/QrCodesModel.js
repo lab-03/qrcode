@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  const qrcodes = sequelize.define(
-    "qrcodes",
+  const QrCodes = sequelize.define(
+    "QrCodes",
     {
       location: {
         type: DataTypes.GEOMETRY("POINT", 4326),
@@ -17,8 +17,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {}
   );
-  qrcodes.associate = function(models) {
+  QrCodes.associate = function(models) {
     // associations can be defined here
   };
-  return qrcodes;
+  return QrCodes;
 };
