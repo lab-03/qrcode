@@ -12,21 +12,19 @@ module.exports = {
         type: Sequelize.GEOMETRY("POINT", 4326),
         allowNull: false
       },
-      instructorId: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
-      courseId: {
-        type: Sequelize.INTEGER,
+      hash: {
+        type: Sequelize.STRING,
+        primaryKey: true,
+        unique: true,
         allowNull: false
       },
       createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull: false
       },
       updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull: false
       }
     });
   },

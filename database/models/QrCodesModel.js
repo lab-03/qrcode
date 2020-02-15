@@ -6,12 +6,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.GEOMETRY("POINT", 4326),
         allowNull: false
       },
-      instructorId: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-      },
-      courseId: {
-        type: DataTypes.INTEGER,
+      hash: {
+        type: DataTypes.STRING,
+        primaryKey: true,
+        unique: true,
         allowNull: false
       }
     },

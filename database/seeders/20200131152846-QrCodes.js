@@ -19,15 +19,13 @@ module.exports = {
     //   "QrCodes",
     //   [
     //     {
-    //       instructorId: "5",
-    //       courseId: "123",
+    //       hash: "ASddcaskdoSOIDANODJ",
     //       location: "((39.807222, -76.984722),4326)",
     //       createdAt: new Date(),
     //       updatedAt: new Date()
     //     },
     //     {
-    //       instructorId: "65",
-    //       courseId: "324",
+    //       hash: "ASddcaskdodsadasfsa",
     //       location: "((10.077905, -11.548469),4326))",
     //       createdAt: new Date(),
     //       updatedAt: new Date()
