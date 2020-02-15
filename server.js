@@ -4,17 +4,19 @@ import qrCodeRoutes from "./routes/QrCodeRoutes";
 
 const cors = require("cors");
 
-const app = express();
-app.use(cors());
+const server = express();
+server.use(cors());
 
-// Configure app to user bodyParser & the routes
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+// Configure server to user bodyParser & the routes
+server.use(bodyParser.json());
+server.use(bodyParser.urlencoded({ extended: false }));
 
-app.use("/api/qrcodes", qrCodeRoutes);
+server.use("/api/qrcodes", qrCodeRoutes);
 
 // create a server using port 5000
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log("server is running on port " + PORT);
 });
+
+module.exports = server;
