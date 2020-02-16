@@ -1,4 +1,4 @@
-require("dotenv").config();
+// require("dotenv").config();
 
 module.exports = {
   development: {
@@ -16,10 +16,10 @@ module.exports = {
     dialect: "postgres"
   },
   production: {
-    username: "amr",
-    password: "root",
-    database: "qrcode_production",
-    host: "127.0.0.1",
+    // username: "",
+    // password: "",
+    // // database: "qrcode_production",
+    host: process.env.DATABASE_URL,
     dialect: "postgres"
   }
 };
