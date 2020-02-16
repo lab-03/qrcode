@@ -18,7 +18,7 @@ module.exports = {
   production: {
     username: "",
     password: "",
-    // database: "qrcode_production",
+    database: "gp-qrcode",
     host: process.env.DATABASE_URL,
     ssl: true,
     dialect: "postgres"
