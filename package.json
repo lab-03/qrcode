@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "nyc mocha --require babel-register tests/test --exit",
-    "start": "export NODE_ENV=production && cd database/ && sequelize db:migrate && cd .. babel-node --presets es2015 server.js",
+    "start": "export NODE_ENV=production && cd database/ && sequelize db:migrate:undo:all && sequelize db:migrate && cd .. && babel-node --presets es2015 server.js",
     "dev": "nodemon server.js --exec babel-node --"
   },
   "author": "",
