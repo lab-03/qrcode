@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "nyc mocha --require babel-register tests/test --exit",
-    "start": "nodemon server.js --exec babel-node --"
+    "start": "babel-node --presets es2015 server.js",
+    "dev": "nodemon server.js --exec babel-node --"
   },
   "author": "",
   "license": "ISC",

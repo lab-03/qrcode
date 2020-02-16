@@ -17,7 +17,7 @@ class QrCodeController {
       });
   }
   static async createQrCode(req, res) {
-    let { hash } = req.body;
+    const { hash } = req.body;
     try {
       let code = await this.generateQrCode({
         hash
@@ -27,7 +27,7 @@ class QrCodeController {
       return util.send(res);
     } catch (err) {
       console.error(err);
-      util.setError(500, err);
+      util.setError(400, err);
       return util.send(res);
     }
   }
