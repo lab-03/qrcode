@@ -14,27 +14,28 @@ const db = {};
 
 let sequelize;
 if (config.environment === "production") {
-  sequelize = new Sequelize(process.env.DATABASE_URL, config);
+  // sequelize = new Sequelize(process.env.DATABASE_URL, config);
   sequelize = new Sequelize(
-    process.env.DATABASE_URL_NAME,
-    process.env.DATABASE_URL_USER,
-    process.env.DATABASE_URL_PASS,
-    {
-      host: process.env.DATABASE_URL,
-      port: process.env.DATABASE_PORT,
-      dialect: "postgres",
-      dialectOption: {
-        ssl: true,
-        native: true
-      },
-      logging: true
-    }
+    // process.env.DATABASE_NAME,
+    // process.env.DATABASE_USER,
+    // process.env.DATABASE_PASS,
+    // {
+    //   host: process.env.DATABASE_URL,
+    //   port: process.env.DATABASE_PORT,
+    //   dialect: "postgres",
+    //   dialectOption: {
+    //     ssl: true,
+    //     native: true
+    //   },
+    //   logging: true
+    // }
+    config
   );
 } else {
   sequelize = new Sequelize(
-    config.database,
-    config.username,
-    config.password,
+    // config.database,
+    // config.username,
+    // config.password,
     config
   );
 }
