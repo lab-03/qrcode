@@ -1,10 +1,6 @@
 require("dotenv").config();
 
 module.exports = {
-  // For online database
-  // development: {
-  //   use_env_variable: 'DATABASE_URL'
-  // },
   development: {
     username: "amr",
     password: "root",
