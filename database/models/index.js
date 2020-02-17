@@ -4,7 +4,7 @@ import Sequelize from "sequelize";
 import configJson from "../config/config";
 
 const basename = path.basename(__filename);
-const env = process.env.NODE_ENV ? process.env.NODE_ENV : "development";
+const env = process.env.NODE_ENV ? process.env.NODE_ENV : "production";
 
 const config = configJson[env];
 
@@ -14,7 +14,7 @@ const db = {};
 
 let sequelize;
 if (config.environment === "production") {
-  sequelize = new Sequelize(config.database, config);
+  sequelize = new Sequelize(process.env.DATABASE_URL, config);
   // sequelize = new Sequelize(
   // process.env.DATABASE_NAME,
   // process.env.DATABASE_USER,
