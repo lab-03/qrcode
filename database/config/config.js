@@ -17,10 +17,10 @@ module.exports = {
   },
   production: {
     use_env_variable: process.env.DATABASE_URL,
-    username: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASS,
-    database: process.env.DATABASE_NAME,
-    host: process.env.DATABASE_HOST,
+    // username: process.env.DATABASE_USER,
+    // password: process.env.DATABASE_PASS,
+    // database: process.env.DATABASE_NAME,
+    // host: process.env.DATABASE_HOST,
     dialect: "postgres",
     protocol: "postgres",
     dialectOption: {
