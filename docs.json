@@ -1,0 +1,205 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.0.0",
+    "title": "QrCode",
+    "description": "QrCode service"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000/api/",
+      "description": "Local server"
+    },
+    {
+      "url": "https://api_url_testing/api/",
+      "description": "Testing server"
+    },
+    {
+      "url": "https://api_url_production/api/",
+      "description": "Production server"
+    }
+  ],
+  "tags": [
+    {
+      "names": ["CRUD operations", "Attendance verifying requests"]
+    }
+  ],
+  "paths": {
+    "/api/qrcodes/create": {
+      "post": {
+        "tags": ["CRUD operations"],
+        "description": "Create a QrCode using a <b>UNIQUE</b> hash",
+        "operationId": "CreateQrCode",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "example": {
+                  "hash": "SBHWUU@*I90jJEK",
+                  "longitude": "10.807222",
+                  "latitude": "-90.984722"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Creation and Insertion succeeded",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "success",
+                  "message": "qrCode created"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Creation or Insertion failed",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "error",
+                  "message": "{Error details}"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/qrcodes": {
+      "get": {
+        "tags": ["CRUD operations"],
+        "description": "Get all qr codes",
+        "operationId": "getallqrcodes",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Qr codes were retrieved",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "success",
+                  "message": "QrCode information retrieved",
+                  "data": [
+                    {
+                      "location": {
+                        "type": "Point",
+                        "coordinates": [10.807222, -90.984722]
+                      },
+                      "hash": "asndkWOMODMasmdao@#!$#!$fasdafs",
+                      "createdAt": "2020-02-15T16:45:27.981Z",
+                      "updatedAt": "2020-02-15T16:45:27.981Z"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "There is no QrCodes in the database",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "No QrCodes were found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error while retrieving data from the database",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "error",
+                  "message": "{Error details}"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/qrcodes/attend": {
+      "post": {
+        "tags": ["Attendance verifying requests"],
+        "description": "Verify attendance request",
+        "operationId": "VerAttReq",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "example": {
+                  "hash": "#HASDIONJifbw39edsa8dasffsd",
+                  "longitude": "10.807222",
+                  "latitude": "-90.984722",
+                  "date": "2020-02-29T09:50:23.091Z"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Verification succeeded",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "success",
+                  "message": "Attendance has been recorded"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "QrCode doesn't exist",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "error",
+                  "message": "No qrCode found"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Verification failed",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "The date sent in the request is too late": {
+                    "value": {
+                      "status": "error",
+                      "message": "This qrCode is no longer valid"
+                    }
+                  },
+                  "Location is too far": {
+                    "value": {
+                      "status": "error",
+                      "message": "Your location is too far"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error while retrieving data from the database",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "error",
+                  "message": "{Error details}"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

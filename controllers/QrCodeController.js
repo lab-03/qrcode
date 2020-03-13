@@ -38,7 +38,7 @@ class QrCodeController {
       if (data.length > 0) {
         util.setSuccess(200, "QrCode information retrieved", data);
       } else {
-        util.setSuccess(404, "No QrCode found");
+        util.setSuccess(404, "No QrCodes were found");
       }
       return util.send(res);
     } catch (err) {
@@ -52,7 +52,7 @@ class QrCodeController {
     try {
       const qrCode = await QrCodeServices.getQrCode(hash);
       if (!qrCode) {
-        util.setError(400, "No qrCode found");
+        util.setError(404, "No qrCode found");
         return util.send(res);
       }
 
@@ -73,7 +73,7 @@ class QrCodeController {
     } catch (err) {
       console.error(err);
       util.setError(500, err);
-      return util.send(res);
+      return await util.send(res);
     }
   }
 }
