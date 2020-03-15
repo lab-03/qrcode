@@ -25,7 +25,7 @@
     }
   ],
   "paths": {
-    "/api/qrcodes/create": {
+    "/qrcodes/create": {
       "post": {
         "tags": ["CRUD operations"],
         "description": "Create a QrCode using a <b>UNIQUE</b> hash",
@@ -70,7 +70,7 @@
         }
       }
     },
-    "/api/qrcodes": {
+    "/qrcodes": {
       "get": {
         "tags": ["CRUD operations"],
         "description": "Get all qr codes",
@@ -123,7 +123,7 @@
         }
       }
     },
-    "/api/qrcodes/attend": {
+    "/qrcodes/attend": {
       "post": {
         "tags": ["Attendance verifying requests"],
         "description": "Verify attendance request",
