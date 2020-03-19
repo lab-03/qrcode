@@ -6,7 +6,7 @@
   "repository": "https://github.com/lab-03/qrcode",
   "scripts": {
     "test": "nyc mocha --require babel-register tests/test --exit",
-    "start": "export NODE_ENV=production && cd database/ && sequelize db:migrate:undo:all && sequelize db:migrate && cd .. && babel-node --presets es2015 server.js",
+    "start": "export NODE_ENV=production && sequelize db:migrate:undo:all && sequelize db:migrate && cd .. && babel-node --presets es2015 server.js",
     "dev": "nodemon server.js --exec babel-node --"
   },
   "author": "",
@@ -27,8 +27,10 @@
     "swagger-ui-express": "^4.1.3"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
     "mocha": "^7.1.0",
-    "nodemon": "^1.19.0",
+    "nodemon": "^2.0.2",
     "nyc": "^15.0.0"
   }
 }

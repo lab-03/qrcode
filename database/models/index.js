@@ -9,7 +9,7 @@ const env = process.env.NODE_ENV ? process.env.NODE_ENV : "development";
 const config = configJson[env];
 
 console.log("using environment: ", env);
-console.log(config);
+// console.log(config);
 
 const db = {};
 

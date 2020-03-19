@@ -32,7 +32,7 @@ describe("QrCodes", () => {
   //         console.log(res.message);
   //       });
   //   });
-  //   describe("GET /api/attend", () => {
+  //   describe("GET /api/qrcodes/attend", () => {
   //     it("should attend a student", done => {
   //       let data = {
   //         hash: "ASDfgwr23rfgefsd@#@!@#dfs",

@@ -23,7 +23,7 @@ class QrCodeController {
         hash
       });
       await QrCodeServices.addQrCode(req.body);
-      util.setSuccess(200, "qrCode created", code);
+      util.setSuccess(200, "QrCode created", code);
       return util.send(res);
     } catch (err) {
       console.error(err);
@@ -38,7 +38,7 @@ class QrCodeController {
       if (data.length > 0) {
         util.setSuccess(200, "QrCode information retrieved", data);
       } else {
-        util.setSuccess(404, "No QrCodes were found");
+        util.setError(404, "No QrCodes were found");
       }
       return util.send(res);
     } catch (err) {
