@@ -20,7 +20,7 @@ const options = {
   logging: console.log
 };
 
-let sequelize = new Sequelize(config.use_env_variable, options);
+let sequelize = new Sequelize(config.url, options);
 
 fs.readdirSync(__dirname)
   .filter(file => {
