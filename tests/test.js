@@ -12,8 +12,9 @@ describe("QrCodes", () => {
         .request(server)
         .get("/api/qrcodes")
         .end((err, res) => {
-          res.should.have.status(200);
-          done();
+          res.should.have.status(404);
+          if (err) done(err);
+          else done();
         });
     });
   });
