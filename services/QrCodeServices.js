@@ -24,11 +24,16 @@ class QrCodesService {
   }
   static async addQrCode(data) {
     const { longitude, latitude, hash } = data;
-    const location = {
+    let location = {
       type: "Point",
       coordinates: [longitude, latitude],
       crs: { type: "name", properties: { name: "EPSG:4326" } }
     };
+
+    if (!longitude || !latitude){
+      location = null;
+    }
+    
     try {
       return await QrCodes.create({
         location,
