@@ -4,17 +4,15 @@ import Sequelize from "sequelize";
 import configJson from "../config/config";
 
 const basename = path.basename(__filename);
-const env = process.env.NODE_ENV ? process.env.NODE_ENV : "development";
+const env = process.env.NODE_ENV;
 
 const config = configJson[env];
 
 console.log("using environment: ", env);
-// console.log(config);
 
 const db = {};
 
 const options = {
-  dialect: "postgres",
   ssl: true,
   dialectOptions: { ssl: { require: true } },
   logging: console.log
