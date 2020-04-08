@@ -1,1 +1,2 @@
-# qrcode
+# QR-code
+![logo](/logo.png)
