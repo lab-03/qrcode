@@ -1,4 +1,5 @@
 "use strict";
+import crypto from "crypto";
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
@@ -13,26 +14,32 @@ module.exports = {
       }], {});
       
     */
-    // let point1 = { type: "Point", coordinates: [39.807222, -76.984722] };
-    // let point2 = { type: "Point", coordinates: [10.077905, -11.548469] };
-    // return queryInterface.bulkInsert(
-    //   "QrCodes",
-    //   [
-    //     {
-    //       hash: "ASddcaskdoSOIDANODJ",
-    //       location: "((39.807222, -76.984722),4326)",
-    //       createdAt: new Date(),
-    //       updatedAt: new Date()
-    //     },
-    //     {
-    //       hash: "ASddcaskdodsadasfsa",
-    //       location: "((10.077905, -11.548469),4326))",
-    //       createdAt: new Date(),
-    //       updatedAt: new Date()
-    //     }
-    //   ],
-    //   {}
-    // );
+    return queryInterface.bulkInsert(
+      "QrCodes",
+      [
+        {
+          hash: "AdSddcaskdoSOFIDANODJ",
+          location: Sequelize.fn(
+            "ST_GeomFromText",
+            "POINT(52.458415 16.904740)",
+            4326
+          ),
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {
+          hash: "ASfddcaskdodGsadasfsa",
+          location: Sequelize.fn(
+            "ST_GeomFromText",
+            "POINT(52.458415 16.904740)",
+            4326
+          ),
+          createdAt: new Date(),
+          updatedAt: new Date()
+        }
+      ],
+      {}
+    );
   },
   down: (queryInterface, Sequelize) => {
     /*

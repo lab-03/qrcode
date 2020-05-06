@@ -1,5 +1,4 @@
 import express from "express";
-import bodyParser from "body-parser";
 import qrCodeRoutes from "./routes/QrCodeRoutes";
 
 const cors = require("cors");
@@ -9,9 +8,8 @@ const docs = require("./docs");
 const server = express();
 server.use(cors());
 
-// Configure server to user bodyParser & the routes
-server.use(bodyParser.json());
-server.use(bodyParser.urlencoded({ extended: false }));
+server.use(express.json());
+server.use(express.urlencoded({ extended: false }));
 server.use("/api/docs", swaggerUi.serve, swaggerUi.setup(docs));
 
 server.use("/api/qrcodes", qrCodeRoutes);
