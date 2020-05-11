@@ -17,8 +17,18 @@ module.exports = {
     let QrCodes = [];
     for (let i = 0; i < 10; i++) {
       let hash = crypto.randomBytes(20).toString("hex");
-      let long = Math.floor(Math.random() * 100 + 1);
-      let lat = Math.floor(Math.random() * 100 + 1);
+      const precision = 10000; // 4 decimals
+      // generate two random floating point numbers between (100, -100) up to 4 decimal places
+      let long =
+        Math.floor(
+          Math.random() * (100 * precision + 100 * precision) - 100 * precision
+        ) /
+        (1 * precision);
+      let lat =
+        Math.floor(
+          Math.random() * (100 * precision + 100 * precision) - 100 * precision
+        ) /
+        (1 * precision);
       const qrCode = {
         hash,
         location: Sequelize.fn(
