@@ -1,5 +1,5 @@
 "use strict";
-import crypto from "crypto";
+let crypto = require("crypto");
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
@@ -14,32 +14,24 @@ module.exports = {
       }], {});
       
     */
-    return queryInterface.bulkInsert(
-      "QrCodes",
-      [
-        {
-          hash: "AdSddcaskdoSOFIDANODJ",
-          location: Sequelize.fn(
-            "ST_GeomFromText",
-            "POINT(52.458415 16.904740)",
-            4326
-          ),
-          createdAt: new Date(),
-          updatedAt: new Date()
-        },
-        {
-          hash: "ASfddcaskdodGsadasfsa",
-          location: Sequelize.fn(
-            "ST_GeomFromText",
-            "POINT(52.458415 16.904740)",
-            4326
-          ),
-          createdAt: new Date(),
-          updatedAt: new Date()
-        }
-      ],
-      {}
-    );
+    let QrCodes = [];
+    for (let i = 0; i < 10; i++) {
+      let hash = crypto.randomBytes(20).toString("hex");
+      let long = Math.floor(Math.random() * 100 + 1);
+      let lat = Math.floor(Math.random() * 100 + 1);
+      const qrCode = {
+        hash,
+        location: Sequelize.fn(
+          "ST_GeomFromText",
+          "POINT(" + long + " " + lat + ")",
+          4326
+        ),
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+      QrCodes.push(qrCode);
+    }
+    return queryInterface.bulkInsert("QrCodes", QrCodes, {});
   },
   down: (queryInterface, Sequelize) => {
     /*
