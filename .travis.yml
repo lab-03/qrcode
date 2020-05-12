@@ -10,10 +10,10 @@ install:
   - npm install
 
 addons:
-  postgresql: 10.12
+  postgresql: 9.6
   apt:
     packages:
-      - postgresql-10.12-postgis-2.4
+      - postgresql-9.6-postgis-2.4
 
 before_script:
   - psql -c 'CREATE DATABASE travis_test;' -U postgres
