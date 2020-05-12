@@ -11,13 +11,16 @@ let hash = crypto.randomBytes(20).toString("hex"),
   latitude = "-90.985722";
 
 describe("GET /api/qrcodes", () => {
+  let tempHash = crypto.randomBytes(20).toString("hex");
   before(function(done) {
     let data = {
-      hash
+      hash: tempHash,
+      longitude,
+      latitude
     };
     chai
       .request(server)
-      .post("/api/qrcodes/end")
+      .post("/api/qrcodes/create")
       .send(data)
       .end((err, res) => {
         done();
