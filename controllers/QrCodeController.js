@@ -51,7 +51,7 @@ class QrCodeController {
     try {
       const data = await QrCodeServices.getAllQrCodes();
       if (data.length > 0) {
-        util.setSuccess(200, "QrCode information retrieved", data);
+        util.setSuccess(200, "QrCodes retrieved", data);
       } else {
         util.setError(404, "No QrCodes were found");
       }
