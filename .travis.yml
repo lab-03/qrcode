@@ -10,7 +10,7 @@ install:
   - npm install
 
 addons:
-  postgresql: 9.6
+  postgresql: 10.12
   apt:
     packages:
       - postgresql-10.12-postgis-2.4
