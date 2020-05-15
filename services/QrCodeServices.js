@@ -30,10 +30,10 @@ class QrCodesService {
       crs: { type: "name", properties: { name: "EPSG:4326" } }
     };
 
-    if (!longitude || !latitude){
+    if (!longitude || !latitude) {
       location = null;
     }
-    
+
     try {
       return await QrCodes.create({
         location,
@@ -43,22 +43,30 @@ class QrCodesService {
       throw err;
     }
   }
-  static validLocation(dataValues, longitude, latitude) {
-    const src = {
-      latitude: dataValues.location.coordinates[1],
-      longitude: dataValues.location.coordinates[0]
-    };
-    return geolib.isPointWithinRadius({ latitude, longitude }, src, 200); // check if within 200 meters
-  }
-  static validDate(dataValues, reqDate) {
-    const TIMEOUT = 600000; // 10 minutes in milliseconds
 
-    let timeDiff = Math.abs(dataValues.createdAt.getTime() - reqDate.getTime());
-
-    if (timeDiff > TIMEOUT) {
-      return 0;
+  static async invalidate(hash) {
+    try {
+      return QrCodes.update(
+        {
+          valid: "false"
+        },
+        {
+          where: {
+            hash
+          }
+        }
+      );
+    } catch (err) {
+      throw err;
     }
-    return 1;
+  }
+
+  static validLocation({ location }, longitude, latitude) {
+    const src = {
+      latitude: location.coordinates[1],
+      longitude: location.coordinates[0]
+    };
+    return geolib.isPointWithinRadius({ latitude, longitude }, src, 30); // check if within 200 meters
   }
 }
 

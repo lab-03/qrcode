@@ -8,10 +8,24 @@ chai.should();
 
 let hash = crypto.randomBytes(20).toString("hex"),
   longitude = "10.807222",
-  latitude = "-90.985722",
-  date = new Date();
+  latitude = "-90.985722";
 
 describe("GET /api/qrcodes", () => {
+  let tempHash = crypto.randomBytes(20).toString("hex");
+  before(function(done) {
+    let data = {
+      hash: tempHash,
+      longitude,
+      latitude
+    };
+    chai
+      .request(server)
+      .post("/api/qrcodes/create")
+      .send(data)
+      .end((err, res) => {
+        done();
+      });
+  });
   it("should get all QrCodes", done => {
     chai
       .request(server)
@@ -28,8 +42,7 @@ describe("POST /api/qrcodes/create", () => {
     let data = {
       hash,
       longitude,
-      latitude,
-      date
+      latitude
     };
     chai
       .request(server)
@@ -41,77 +54,111 @@ describe("POST /api/qrcodes/create", () => {
         if (err) done(err);
         else done();
       });
-  });
+  }),
+    it("should fail to save the QrCode in the database because the same hash exists", done => {
+      let data = {
+        hash,
+        longitude,
+        latitude
+      };
+      chai
+        .request(server)
+        .post("/api/qrcodes/create")
+        .send(data)
+        .end((err, res) => {
+          res.should.have.status(400);
+          assert.equal(res.body.message.name, "SequelizeUniqueConstraintError");
+          if (err) done(err);
+          else done();
+        });
+    }),
+    it("should fail to save the QrCode in the database because the hash equal null", done => {
+      let data = {
+        longitude,
+        latitude
+      };
+      chai
+        .request(server)
+        .post("/api/qrcodes/create")
+        .send(data)
+        .end((err, res) => {
+          res.should.have.status(400);
+          assert.equal(res.body.message.name, "SequelizeValidationError");
+          if (err) done(err);
+          else done();
+        });
+    }),
+    it("should fail to save the QrCode in the database because the latitude or longitude or both equal null", done => {
+      let data = {
+        hash,
+        latitude
+      };
+      chai
+        .request(server)
+        .post("/api/qrcodes/create")
+        .send(data)
+        .end((err, res) => {
+          res.should.have.status(400);
+          assert.equal(res.body.message.name, "SequelizeValidationError");
+          if (err) done(err);
+          else done();
+        });
+    });
 });
 
-describe("POST /api/qrcodes/create", () => {
-  it("should fail to save the QrCode in the database because the same hash exists", done => {
+describe("POST /api/qrcodes/end", () => {
+  let tempHash = crypto.randomBytes(20).toString("hex");
+  before(function(done) {
     let data = {
-      hash,
+      hash: tempHash,
       longitude,
-      latitude,
-      date
+      latitude
     };
     chai
       .request(server)
       .post("/api/qrcodes/create")
       .send(data)
       .end((err, res) => {
-        res.should.have.status(400);
-        assert.equal(res.body.message.name, "SequelizeUniqueConstraintError");
-        if (err) done(err);
-        else done();
+        done();
       });
   });
-});
-
-describe("POST /api/qrcodes/create", () => {
-  it("should fail to save the QrCode in the database because the hash equal null", done => {
+  it("should successfully invalidate a qrCode", done => {
     let data = {
-      longitude,
-      latitude,
-      date
+      hash: tempHash
     };
     chai
       .request(server)
-      .post("/api/qrcodes/create")
+      .post("/api/qrcodes/end")
       .send(data)
       .end((err, res) => {
-        res.should.have.status(400);
-        assert.equal(res.body.message.name, "SequelizeValidationError");
+        res.should.have.status(200);
+        assert.equal(res.body.message, "QrCode is no longer valid");
         if (err) done(err);
         else done();
       });
-  });
+  }),
+    it("should fail at invalidating the qrCode because it doesn't exist", done => {
+      let data = {
+        hash: crypto.randomBytes(20).toString("hex")
+      };
+      chai
+        .request(server)
+        .post("/api/qrcodes/end")
+        .send(data)
+        .end((err, res) => {
+          res.should.have.status(404);
+          assert.equal(res.body.message, "QrCode doesn't exist");
+          if (err) done(err);
+          else done();
+        });
+    });
 });
-
-describe("POST /api/qrcodes/create", () => {
-  it("should fail to save the QrCode in the database because the latitude or longitude or both equal null", done => {
-    let data = {
-      hash,
-      latitude,
-      date
-    };
-    chai
-      .request(server)
-      .post("/api/qrcodes/create")
-      .send(data)
-      .end((err, res) => {
-        res.should.have.status(400);
-        assert.equal(res.body.message.name, "SequelizeValidationError");
-        if (err) done(err);
-        else done();
-      });
-  });
-});
-
 describe("POST /api/qrcodes/attend", () => {
   it("should attend a student", done => {
     let data = {
       hash,
       longitude,
-      latitude,
-      date
+      latitude
     };
     chai
       .request(server)
@@ -119,7 +166,7 @@ describe("POST /api/qrcodes/attend", () => {
       .send(data)
       .end((err, res) => {
         res.should.have.status(200);
-        assert.equal(res.body.message, "Attendance has been recorded");
+        assert.equal(res.body.message, "Attendance request has been verified");
         if (err) done(err);
         else done();
       });
@@ -131,8 +178,7 @@ describe("POST /api/qrcodes/attend", () => {
     let data = {
       hash: " ",
       longitude,
-      latitude,
-      date
+      latitude
     };
     chai
       .request(server)
@@ -152,8 +198,7 @@ describe("POST /api/qrcodes/attend", () => {
     let data = {
       hash,
       longitude: "11.807222",
-      latitude,
-      date
+      latitude
     };
     chai
       .request(server)
@@ -172,8 +217,7 @@ describe("POST /api/qrcodes/attend", () => {
     let data = {
       hash,
       longitude,
-      latitude: "-91.985722",
-      date
+      latitude: "-91.985722"
     };
     chai
       .request(server)
@@ -189,14 +233,23 @@ describe("POST /api/qrcodes/attend", () => {
 });
 
 describe("POST /api/qrcodes/attend", () => {
-  it("should not attend a student because its time out", done => {
-    date = new Date(date.getTime() + 11 * 60000);
-
+  before(function(done) {
+    let data = {
+      hash
+    };
+    chai
+      .request(server)
+      .post("/api/qrcodes/end")
+      .send(data)
+      .end((err, res) => {
+        done();
+      });
+  });
+  it("should not attend a student because the qrCode is no longer valid", done => {
     let data = {
       hash,
       longitude,
-      latitude,
-      date
+      latitude
     };
 
     chai
@@ -205,7 +258,7 @@ describe("POST /api/qrcodes/attend", () => {
       .send(data)
       .end((err, res) => {
         res.should.have.status(400);
-        assert.equal(res.body.message, "This qrCode is no longer valid");
+        assert.equal(res.body.message, "This QrCode is no longer valid");
         if (err) done(err);
         else done();
       });

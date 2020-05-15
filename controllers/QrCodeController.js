@@ -32,11 +32,26 @@ class QrCodeController {
     }
   }
 
+  static async invalidate(req, res) {
+    const { hash } = req.body;
+    try {
+      const result = await QrCodeServices.invalidate(hash);
+      if (result[0]) util.setSuccess(200, "QrCode is no longer valid");
+      else util.setError(404, "QrCode doesn't exist");
+
+      return util.send(res);
+    } catch (err) {
+      console.error(err);
+      util.setError(500, err);
+      return util.send(res);
+    }
+  }
+
   static async getAllQrCodes(req, res) {
     try {
       const data = await QrCodeServices.getAllQrCodes();
       if (data.length > 0) {
-        util.setSuccess(200, "QrCode information retrieved", data);
+        util.setSuccess(200, "QrCodes retrieved", data);
       } else {
         util.setError(404, "No QrCodes were found");
       }
@@ -53,27 +68,24 @@ class QrCodeController {
       const qrCode = await QrCodeServices.getQrCode(hash);
       if (!qrCode) {
         util.setError(404, "No qrCode found");
-        return util.send(res);
-      }
-
-      if (!QrCodeServices.validDate(qrCode.dataValues, new Date(date))) {
-        util.setError(400, "This qrCode is no longer valid");
-        return util.send(res);
-      }
-
-      if (
-        QrCodeServices.validLocation(qrCode.dataValues, longitude, latitude)
-      ) {
-        util.setSuccess(200, "Attendance has been recorded");
-        return util.send(res);
       } else {
-        util.setError(400, "Your location is too far");
-        return util.send(res);
+        if (qrCode.dataValues.valid) {
+          if (
+            QrCodeServices.validLocation(qrCode.dataValues, longitude, latitude)
+          ) {
+            util.setSuccess(200, "Attendance request has been verified");
+          } else {
+            util.setError(400, "Your location is too far");
+          }
+        } else {
+          util.setError(400, "This QrCode is no longer valid");
+        }
       }
+      return util.send(res);
     } catch (err) {
       console.error(err);
       util.setError(500, err);
-      return await util.send(res);
+      return util.send(res);
     }
   }
 }
