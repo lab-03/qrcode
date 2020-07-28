@@ -1,22 +1,18 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "version": "1.0.0",
+    "version": "1.1.1",
     "title": "QrCode",
     "description": "QrCode service"
   },
   "servers": [
     {
-      "url": "http://localhost:5000/api/",
+      "url": "https://gp-qrcode.herokuapp.com/api",
+      "description": "heroku development server"
+    },
+    {
+      "url": "http://localhost:5000/api",
       "description": "Local server"
-    },
-    {
-      "url": "https://api_url_testing/api/",
-      "description": "Testing server"
-    },
-    {
-      "url": "https://api_url_production/api/",
-      "description": "Production server"
     }
   ],
   "tags": [
@@ -35,7 +31,7 @@
             "application/json": {
               "schema": {
                 "example": {
-                  "hash": "SBHWUU@*I90jJEK",
+                  "hash": "#HASDIONJifbw39edsa8dasffsd",
                   "longitude": "10.807222",
                   "latitude": "-90.984722"
                 }
@@ -51,7 +47,7 @@
               "application/json": {
                 "example": {
                   "status": "success",
-                  "message": "qrCode created"
+                  "message": "QrCode created"
                 }
               }
             }
@@ -73,17 +69,16 @@
     "/qrcodes": {
       "get": {
         "tags": ["CRUD operations"],
-        "description": "Get all qr codes",
+        "description": "Get all QrCodes",
         "operationId": "getallqrcodes",
-        "parameters": [],
         "responses": {
           "200": {
-            "description": "Qr codes were retrieved",
+            "description": "Qrcodes were retrieved successfully",
             "content": {
               "application/json": {
                 "example": {
                   "status": "success",
-                  "message": "QrCode information retrieved",
+                  "message": "QrCodes retrieved",
                   "data": [
                     {
                       "location": {
@@ -91,8 +86,19 @@
                         "coordinates": [10.807222, -90.984722]
                       },
                       "hash": "asndkWOMODMasmdao@#!$#!$fasdafs",
+                      "valid": true,
                       "createdAt": "2020-02-15T16:45:27.981Z",
                       "updatedAt": "2020-02-15T16:45:27.981Z"
+                    },
+                    {
+                      "location": {
+                        "type": "Point",
+                        "coordinates": [10.807222, -90.984722]
+                      },
+                      "hash": "asndkWfasdafs",
+                      "valid": false,
+                      "createdAt": "2020-02-15T17:45:27.981Z",
+                      "updatedAt": "2020-02-15T17:45:27.981Z"
                     }
                   ]
                 }
@@ -123,11 +129,191 @@
         }
       }
     },
+    "/qrcodes/get": {
+      "post": {
+        "tags": ["CRUD operations"],
+        "description": "Get a QrCode",
+        "operationId": "getaqrcode",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "example": {
+                  "hash": "#HASDIONJifbw39edsa8dasffsd"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "QrCode retrieved successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "success",
+                  "message": "QrCode retrieved",
+                  "data": [
+                    {
+                      "location": {
+                        "type": "Point",
+                        "coordinates": [10.807222, -90.984722]
+                      },
+                      "hash": "asndasdasdm",
+                      "valid": true,
+                      "createdAt": "2020-02-15T16:45:27.981Z",
+                      "updatedAt": "2020-02-15T16:45:27.981Z"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "QrCode doesn't exist",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "No qrCode found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error while retrieving data from the database",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "error",
+                  "message": "{Error details}"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/qrcodes/delete": {
+      "delete": {
+        "tags": ["CRUD operations"],
+        "description": "delete a QrCode",
+        "operationId": "deleteaqrcode",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "example": {
+                  "hash": "#HASDIONJifbw39edsa8dasffsd"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "QrCode deleted successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "success",
+                  "message": "QrCode deleted"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "QrCode doesn't exist",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "No qrCode found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error while deleting data from the database",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "error",
+                  "message": "{Error details}"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/qrcodes/end": {
+      "post": {
+        "tags": ["CRUD operations"],
+        "description": "invalidates a QrCode",
+        "operationId": "invalidateaqrcode",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "example": {
+                  "hash": "#HASDIONJifbw39edsa8dasffsd"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "QrCode invalidated successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "success",
+                  "message": "QrCode has been invalidated"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "QrCode doesn't exist",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "No qrCode found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error while deleting data from the database",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "error",
+                  "message": "{Error details}"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/qrcodes/attend": {
       "post": {
         "tags": ["Attendance verifying requests"],
         "description": "Verify attendance request",
         "operationId": "VerAttReq",
+        "parameters": [
+          {
+            "name": "hash",
+            "description": "Unique hash created by the instructor"
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -135,8 +321,7 @@
                 "example": {
                   "hash": "#HASDIONJifbw39edsa8dasffsd",
                   "longitude": "10.807222",
-                  "latitude": "-90.984722",
-                  "date": "2020-02-29T09:50:23.091Z"
+                  "latitude": "-90.984722"
                 }
               }
             }
@@ -150,7 +335,7 @@
               "application/json": {
                 "example": {
                   "status": "success",
-                  "message": "Attendance has been recorded"
+                  "message": "Attendance request has been verified"
                 }
               }
             }

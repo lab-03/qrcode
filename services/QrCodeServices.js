@@ -22,6 +22,18 @@ class QrCodesService {
       throw err;
     }
   }
+  static async deleteQrCode(hash) {
+    try {
+      const res = await QrCodes.destroy({
+        where: {
+          hash
+        }
+      });
+      return res;
+    } catch (err) {
+      throw err;
+    }
+  }
   static async addQrCode(data) {
     const { longitude, latitude, hash } = data;
     let location = {

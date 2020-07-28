@@ -37,6 +37,90 @@ describe("GET /api/qrcodes", () => {
       });
   });
 });
+describe("POST /api/qrcodes/get", () => {
+  let succHash = crypto.randomBytes(20).toString("hex");
+  let failHash = crypto.randomBytes(20).toString("hex");
+
+  before(function(done) {
+    let data = {
+      hash: succHash,
+      longitude,
+      latitude
+    };
+    chai
+      .request(server)
+      .post("/api/qrcodes/create")
+      .send(data)
+      .end((err, res) => {
+        done();
+      });
+  });
+  it("should get a QrCode", done => {
+    chai
+      .request(server)
+      .post("/api/qrcodes/get")
+      .send({ hash: succHash })
+      .end((err, res) => {
+        res.should.have.status(200);
+        if (err) done(err);
+        else done();
+      });
+  });
+  it("should fail if the QrCode doesn't exist", done => {
+    chai
+      .request(server)
+      .post("/api/qrcodes/get")
+      .send({ hash: failHash })
+      .end((err, res) => {
+        res.should.have.status(404);
+        if (err) done(err);
+        else done();
+      });
+  });
+});
+
+describe("DELETE /api/qrcodes/delete", () => {
+  let succHash = crypto.randomBytes(20).toString("hex");
+  let failHash = crypto.randomBytes(20).toString("hex");
+
+  before(function(done) {
+    let data = {
+      hash: succHash,
+      longitude,
+      latitude
+    };
+    chai
+      .request(server)
+      .post("/api/qrcodes/create")
+      .send(data)
+      .end((err, res) => {
+        done();
+      });
+  });
+  it("should delete a QrCode", done => {
+    chai
+      .request(server)
+      .delete("/api/qrcodes/delete")
+      .send({ hash: succHash })
+      .end((err, res) => {
+        res.should.have.status(200);
+        if (err) done(err);
+        else done();
+      });
+  });
+  it("should fail if the QrCode doesn't exist", done => {
+    chai
+      .request(server)
+      .delete("/api/qrcodes/delete")
+      .send({ hash: failHash })
+      .end((err, res) => {
+        res.should.have.status(404);
+        if (err) done(err);
+        else done();
+      });
+  });
+});
+
 describe("POST /api/qrcodes/create", () => {
   it("should create a qr", done => {
     let data = {
@@ -147,7 +231,7 @@ describe("POST /api/qrcodes/end", () => {
         .send(data)
         .end((err, res) => {
           res.should.have.status(404);
-          assert.equal(res.body.message, "QrCode doesn't exist");
+          assert.equal(res.body.message, "No qrCode found");
           if (err) done(err);
           else done();
         });
