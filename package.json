@@ -1,6 +1,6 @@
 {
   "name": "QrCode",
-  "version": "1.0.0",
+  "version": "1.1.1",
   "description": "QrCode service",
   "main": "server.js",
   "repository": "https://github.com/lab-03/qrcode",
