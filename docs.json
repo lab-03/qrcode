@@ -1,22 +1,18 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "version": "1.0.0",
+    "version": "1.0.1",
     "title": "QrCode",
     "description": "QrCode service"
   },
   "servers": [
     {
-      "url": "http://localhost:5000/api/",
+      "url": "https://gp-qrcode.herokuapp.com/api",
+      "description": "heroku development server"
+    },
+    {
+      "url": "http://localhost:5000/api",
       "description": "Local server"
-    },
-    {
-      "url": "https://api_url_testing/api/",
-      "description": "Testing server"
-    },
-    {
-      "url": "https://api_url_production/api/",
-      "description": "Production server"
     }
   ],
   "tags": [
@@ -35,7 +31,7 @@
             "application/json": {
               "schema": {
                 "example": {
-                  "hash": "SBHWUU@*I90jJEK",
+                  "hash": "SBHWUU@*I90jJEKw",
                   "longitude": "10.807222",
                   "latitude": "-90.984722"
                 }
@@ -91,8 +87,19 @@
                         "coordinates": [10.807222, -90.984722]
                       },
                       "hash": "asndkWOMODMasmdao@#!$#!$fasdafs",
+                      "valid": true,
                       "createdAt": "2020-02-15T16:45:27.981Z",
                       "updatedAt": "2020-02-15T16:45:27.981Z"
+                    },
+                    {
+                      "location": {
+                        "type": "Point",
+                        "coordinates": [10.807222, -90.984722]
+                      },
+                      "hash": "asndkWfasdafs",
+                      "valid": false,
+                      "createdAt": "2020-02-15T17:45:27.981Z",
+                      "updatedAt": "2020-02-15T17:45:27.981Z"
                     }
                   ]
                 }
@@ -135,8 +142,7 @@
                 "example": {
                   "hash": "#HASDIONJifbw39edsa8dasffsd",
                   "longitude": "10.807222",
-                  "latitude": "-90.984722",
-                  "date": "2020-02-29T09:50:23.091Z"
+                  "latitude": "-90.984722"
                 }
               }
             }
@@ -150,7 +156,7 @@
               "application/json": {
                 "example": {
                   "status": "success",
-                  "message": "Attendance has been recorded"
+                  "message": "Attendance request has been verified"
                 }
               }
             }
