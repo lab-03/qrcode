@@ -47,6 +47,24 @@ class QrCodeController {
     }
   }
 
+  static async getQrCode(req, res) {
+    const { hash } = req.body;
+
+    try {
+      const qrCode = await QrCodeServices.getQrCode(hash);
+      if (!qrCode) {
+        util.setError(404, "No qrCode found");
+      } else {
+        util.setSuccess(200, "QrCode retrieved", qrCode);
+      }
+      return util.send(res);
+    } catch (err) {
+      console.error(err);
+      util.setError(500, err);
+      return util.send(res);
+    }
+  }
+
   static async getAllQrCodes(req, res) {
     try {
       const data = await QrCodeServices.getAllQrCodes();
@@ -54,6 +72,22 @@ class QrCodeController {
         util.setSuccess(200, "QrCodes retrieved", data);
       } else {
         util.setError(404, "No QrCodes were found");
+      }
+      return util.send(res);
+    } catch (err) {
+      console.error(err);
+      util.setError(500, err);
+      return util.send(res);
+    }
+  }
+  static async deleteQrCode(req, res) {
+    const { hash } = req.body;
+    try {
+      const result = await QrCodeServices.deleteQrCode(hash);
+      if (!result) {
+        util.setError(404, "No qrCode found");
+      } else {
+        util.setSuccess(200, "QrCode deleted");
       }
       return util.send(res);
     } catch (err) {
