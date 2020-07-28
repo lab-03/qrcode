@@ -66,7 +66,7 @@ class QrCodesService {
       latitude: location.coordinates[1],
       longitude: location.coordinates[0]
     };
-    return geolib.isPointWithinRadius({ latitude, longitude }, src, 30); // check if within 200 meters
+    return geolib.isPointWithinRadius({ latitude, longitude }, src, 30); // check if within 30 meters
   }
 }
 
