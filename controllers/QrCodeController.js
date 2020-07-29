@@ -37,7 +37,7 @@ class QrCodeController {
     try {
       const result = await QrCodeServices.invalidate(hash);
       if (result[0]) util.setSuccess(200, "QrCode has been invalidated");
-      else util.setError(404, "QrCode doesn't exist");
+      else util.setError(404, "No qrCode found");
 
       return util.send(res);
     } catch (err) {
