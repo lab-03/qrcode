@@ -308,12 +308,7 @@
         "tags": ["Attendance verifying requests"],
         "description": "Verify attendance request",
         "operationId": "VerAttReq",
-        "parameters": [
-          {
-            "name": "hash",
-            "description": "Unique hash created by the instructor"
-          }
-        ],
+        "parameters": [],
         "requestBody": {
           "content": {
             "application/json": {
