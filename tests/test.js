@@ -190,7 +190,7 @@ describe("POST /api/qrcodes/create", () => {
     });
 });
 
-describe("POST /api/qrcodes/end", () => {
+describe("PUT /api/qrcodes/end", () => {
   let tempHash = crypto.randomBytes(20).toString("hex");
   before(function(done) {
     let data = {
@@ -212,7 +212,7 @@ describe("POST /api/qrcodes/end", () => {
     };
     chai
       .request(server)
-      .post("/api/qrcodes/end")
+      .put("/api/qrcodes/end")
       .send(data)
       .end((err, res) => {
         res.should.have.status(200);
@@ -227,7 +227,7 @@ describe("POST /api/qrcodes/end", () => {
       };
       chai
         .request(server)
-        .post("/api/qrcodes/end")
+        .put("/api/qrcodes/end")
         .send(data)
         .end((err, res) => {
           res.should.have.status(404);
@@ -323,7 +323,7 @@ describe("POST /api/qrcodes/attend", () => {
     };
     chai
       .request(server)
-      .post("/api/qrcodes/end")
+      .put("/api/qrcodes/end")
       .send(data)
       .end((err, res) => {
         done();
