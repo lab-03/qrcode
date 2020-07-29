@@ -198,7 +198,7 @@
     "/qrcodes/delete": {
       "delete": {
         "tags": ["CRUD operations"],
-        "description": "delete a QrCode",
+        "description": "Delete a QrCode",
         "operationId": "deleteaqrcode",
         "parameters": [],
         "requestBody": {
@@ -250,9 +250,9 @@
       }
     },
     "/qrcodes/end": {
-      "post": {
+      "put": {
         "tags": ["CRUD operations"],
-        "description": "invalidates a QrCode",
+        "description": "Invalidates a QrCode",
         "operationId": "invalidateaqrcode",
         "parameters": [],
         "requestBody": {
