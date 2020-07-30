@@ -15,11 +15,9 @@
       "description": "Local server"
     }
   ],
-  "tags": [
-    {
-      "names": ["CRUD operations", "Attendance verifying requests"]
-    }
-  ],
+  "tags": {
+    "names": ["CRUD operations", "Attendance verifying requests"]
+  },
   "paths": {
     "/qrcodes/create": {
       "post": {
