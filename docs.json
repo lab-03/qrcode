@@ -351,7 +351,7 @@
             "content": {
               "application/json": {
                 "examples": {
-                  "The date sent in the request is too late": {
+                  "The QrCode has been invalidated": {
                     "value": {
                       "status": "error",
                       "message": "This qrCode is no longer valid"
