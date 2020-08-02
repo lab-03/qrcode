@@ -103,16 +103,24 @@ class QrCodeController {
       if (!qrCode) {
         util.setError(404, "No qrCode found");
       } else {
-        if (qrCode.dataValues.valid && qrCode.dataValues.applyChecks) {
-          if (
-            QrCodeServices.validLocation(qrCode.dataValues, longitude, latitude)
-          ) {
-            util.setSuccess(200, "Attendance request has been verified");
+        if (qrCode.dataValues.valid) {
+          if (qrCode.dataValues.applyChecks && longitude && latitude) {
+            if (
+              QrCodeServices.validLocation(
+                qrCode.dataValues,
+                longitude,
+                latitude
+              )
+            ) {
+              util.setSuccess(200, "Attendance request has been verified");
+            } else {
+              util.setError(400, "Your location is too far");
+            }
+          } else if (qrCode.dataValues.applyChecks && !longitude && !latitude) {
+            util.setError(400, "Location must be sent");
           } else {
-            util.setError(400, "Your location is too far");
+            util.setSuccess(200, "Attendance request has been verified");
           }
-        } else if (!qrCode.dataValues.applyChecks) {
-          util.setSuccess(200, "Attendance request has been verified");
         } else {
           util.setError(400, "This QrCode is no longer valid");
         }
