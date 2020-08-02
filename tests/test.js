@@ -122,7 +122,7 @@ describe("DELETE /api/qrcodes/delete", () => {
 });
 
 describe("POST /api/qrcodes/create", () => {
-  it("should create a qr", done => {
+  it("should create and save a QrCode in the database with a location value", done => {
     let data = {
       hash,
       longitude,
@@ -139,6 +139,22 @@ describe("POST /api/qrcodes/create", () => {
         else done();
       });
   }),
+    it("should create and save a QrCode in the database without a location value provided", done => {
+      let data = {
+        hash: crypto.randomBytes(20).toString("hex"),
+        applyChecks: false
+      };
+      chai
+        .request(server)
+        .post("/api/qrcodes/create")
+        .send(data)
+        .end((err, res) => {
+          res.should.have.status(200);
+          assert.equal(res.body.message, "QrCode created");
+          if (err) done(err);
+          else done();
+        });
+    }),
     it("should fail to save the QrCode in the database because the same hash exists", done => {
       let data = {
         hash,
@@ -159,22 +175,6 @@ describe("POST /api/qrcodes/create", () => {
     it("should fail to save the QrCode in the database because the hash equal null", done => {
       let data = {
         longitude,
-        latitude
-      };
-      chai
-        .request(server)
-        .post("/api/qrcodes/create")
-        .send(data)
-        .end((err, res) => {
-          res.should.have.status(400);
-          assert.equal(res.body.message.name, "SequelizeValidationError");
-          if (err) done(err);
-          else done();
-        });
-    }),
-    it("should fail to save the QrCode in the database because the latitude or longitude or both equal null", done => {
-      let data = {
-        hash,
         latitude
       };
       chai
