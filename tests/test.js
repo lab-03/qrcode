@@ -317,6 +317,39 @@ describe("POST /api/qrcodes/attend", () => {
 });
 
 describe("POST /api/qrcodes/attend", () => {
+  let uncheckableHash = crypto.randomBytes(20).toString("hex");
+  before(function(done) {
+    let data = {
+      hash: uncheckableHash,
+      applyChecks: false
+    };
+    chai
+      .request(server)
+      .post("/api/qrcodes/create")
+      .send(data)
+      .end((err, res) => {
+        done();
+      });
+  });
+  it("should attend a student without checking the location", done => {
+    let data = {
+      hash: uncheckableHash
+    };
+    chai
+      .request(server)
+      .post("/api/qrcodes/attend")
+      .send(data)
+      .end((err, res) => {
+        console.log(res.body.message);
+        res.should.have.status(200);
+        assert.equal(res.body.message, "Attendance request has been verified");
+        if (err) done(err);
+        else done();
+      });
+  });
+});
+
+describe("POST /api/qrcodes/attend", () => {
   before(function(done) {
     let data = {
       hash
@@ -329,7 +362,7 @@ describe("POST /api/qrcodes/attend", () => {
         done();
       });
   });
-  it("should not attend a student because the qrCode is no longer valid", done => {
+  it("should NOT attend a student because the qrCode is no longer valid", done => {
     let data = {
       hash,
       longitude,
