@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "version": "1.1.1",
+    "version": "2.1.1",
     "title": "QrCode",
     "description": "QrCode service"
   },
@@ -15,11 +15,9 @@
       "description": "Local server"
     }
   ],
-  "tags": [
-    {
-      "names": ["CRUD operations", "Attendance verifying requests"]
-    }
-  ],
+  "tags": {
+    "names": ["CRUD operations", "Attendance verifying requests"]
+  },
   "paths": {
     "/qrcodes/create": {
       "post": {
@@ -47,7 +45,8 @@
               "application/json": {
                 "example": {
                   "status": "success",
-                  "message": "QrCode created"
+                  "message": "QrCode created",
+                  "data": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAACUCAYAAAB1PADUAAAAAklEQVR4AewaftIAAATXSURBVO3BQY4jRxAEwfAC//9l1xzzVECjk6NdKczwR6qWnFQtOqladFK16KRq0UnVopOqRSdVi06qFp1ULTqpWnRSteikatFJ1aKTqkUnVYs+eQnIb1LzBpBJzQTkRs0EZFJzA2RScwPkN6l546Rq0UnVopOqRZ8sU7MJyBNAJjU3QCY1E5AJyKRmAnKjZgIyqblRswnIppOqRSdVi06qFn3yZUCeUPMEkBsgN2qeUHOjZgIyAZnUvAHkCTXfdFK16KRq0UnVok/+Y9TcAHlCzQRkUjMBmdTcAJnU/M1OqhadVC06qVr0yf+MmgnIjZpJzRtAJjX/JSdVi06qFp1ULfrky9T8m4BMap4A8gaQSc0mNX+Sk6pFJ1WLTqoWfbIMyN9MzQRkUjMBmdRMQG6ATGpugPzJTqoWnVQtOqla9MlLav4kQCY1E5BJzQRkUjMBmdS8oeZGzd/kpGrRSdWik6pF+CMvAJnUTEA2qdkEZFIzAXlDzQTkRs0EZJOabzqpWnRSteikatEnL6l5Q80TQCY1N0Bu1NyoeQPIjZoJyBtqboDcqHnjpGrRSdWik6pFnywDcqPmCSB/EiCTmifUTEAmNU8AmYBMaiY133RSteikatFJ1SL8kReA3Ki5ATKpuQFyo+YGyI2aCcik5jcBmdTcAJnUTEAmNZtOqhadVC06qVqEP/JFQG7U3ACZ1NwAmdTcAJnU3AD5JjVvAHlDzRsnVYtOqhadVC36ZBmQSc0EZAJyo2YCMqmZ1ExAbtRMQG7UTEAmNTdAJjUTkDfU3AD5ppOqRSdVi06qFuGPvADkT6ZmAjKpmYBsUnMDZFLzBpAbNd90UrXopGrRSdWiT36Zmhsgk5oJyKRmAvIEkBs136RmAvKEmhs1E5AbNW+cVC06qVp0UrUIf+QFIJOaCcgTaiYgm9RMQCY1E5BJzQ2QSc0E5EbNJiA3ajadVC06qVp0UrUIf+QFIDdqboDcqJmAvKFmE5BNaiYgT6iZgDyh5o2TqkUnVYtOqhZ9skzNE2omIBOQSc2/CcikZgIyqbkBcqNmAvKEmgnIpGbTSdWik6pFJ1WLPvkyIG+omYC8oWYCMqmZgExqbtQ8oeYJNROQJ9RMQCY1b5xULTqpWnRSteiTf5maCcgEZFJzA2RSc6PmRs0TQCY1E5DfBOQ3nVQtOqladFK1CH/kLwbkCTUTkCfUTEAmNROQJ9Q8AWRS8wSQSc0bJ1WLTqoWnVQt+uQlIL9JzaTmBsgE5A0gk5oJyKRmAvIEkEnNE0AmNZOaTSdVi06qFp1ULfpkmZpNQG6ATGomNU8AmdRMQCYgk5obNROQGzVvqPlNJ1WLTqoWnVQt+uTLgDyh5g0gN2pu1ExAngAyqXkCyBtAbtR800nVopOqRSdViz75nwHyhJongExAJjWTmm8CMgG5UfPGSdWik6pFJ1WLPvmPUzMBuVFzA+RGzQTkBsikZgLyhJon1Gw6qVp0UrXopGrRJ1+m5pvUTEBu1LyhZgLyBJAbIDdqnlAzAfmmk6pFJ1WLTqoWfbIMyG8CMqm5AfJNQCY13wRkUjMBmdR800nVopOqRSdVi/BHqpacVC06qVp0UrXopGrRSdWik6pFJ1WLTqoWnVQtOqladFK16KRq0UnVopOqRSdVi/4BUhpHJYMqM7MAAAAASUVORK5CYII="
                 }
               }
             }
@@ -198,7 +197,7 @@
     "/qrcodes/delete": {
       "delete": {
         "tags": ["CRUD operations"],
-        "description": "delete a QrCode",
+        "description": "Delete a QrCode",
         "operationId": "deleteaqrcode",
         "parameters": [],
         "requestBody": {
@@ -250,9 +249,9 @@
       }
     },
     "/qrcodes/end": {
-      "post": {
+      "put": {
         "tags": ["CRUD operations"],
-        "description": "invalidates a QrCode",
+        "description": "Invalidates a QrCode",
         "operationId": "invalidateaqrcode",
         "parameters": [],
         "requestBody": {
@@ -308,12 +307,7 @@
         "tags": ["Attendance verifying requests"],
         "description": "Verify attendance request",
         "operationId": "VerAttReq",
-        "parameters": [
-          {
-            "name": "hash",
-            "description": "Unique hash created by the instructor"
-          }
-        ],
+        "parameters": [],
         "requestBody": {
           "content": {
             "application/json": {
@@ -356,7 +350,7 @@
             "content": {
               "application/json": {
                 "examples": {
-                  "The date sent in the request is too late": {
+                  "The QrCode has been invalidated": {
                     "value": {
                       "status": "error",
                       "message": "This qrCode is no longer valid"
