@@ -29,17 +29,27 @@ module.exports = {
           Math.random() * (100 * precision + 100 * precision) - 100 * precision
         ) /
         (1 * precision);
-      const qrCode = {
+      const checkableQrCode = {
         hash,
         location: Sequelize.fn(
           "ST_GeomFromText",
           "POINT(" + long + " " + lat + ")",
           4326
         ),
+        applyChecks: true,
         createdAt: new Date(),
         updatedAt: new Date()
       };
-      QrCodes.push(qrCode);
+      hash = crypto.randomBytes(20).toString("hex");
+      const nonCheckableQrCode = {
+        hash,
+        location: null,
+        applyChecks: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+      QrCodes.push(checkableQrCode);
+      QrCodes.push(nonCheckableQrCode);
     }
     return queryInterface.bulkInsert("QrCodes", QrCodes, {});
   },
