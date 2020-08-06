@@ -17,10 +17,11 @@ class QrCodeController {
       });
   }
   static async createQrCode(req, res) {
-    const { hash } = req.body;
+    const { hash, applyChecks } = req.body;
     try {
       let code = await this.generateQrCode({
-        hash
+        hash,
+	applyChecks
       });
       await QrCodeServices.addQrCode(req.body);
       util.setSuccess(200, "QrCode created", code);
