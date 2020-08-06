@@ -17,10 +17,11 @@ class QrCodeController {
       });
   }
   static async createQrCode(req, res) {
-    const { hash } = req.body;
+    const { hash, applyChecks } = req.body;
     try {
       let code = await this.generateQrCode({
-        hash
+        hash,
+	applyChecks
       });
       await QrCodeServices.addQrCode(req.body);
       util.setSuccess(200, "QrCode created", code);
@@ -97,19 +98,29 @@ class QrCodeController {
     }
   }
   static async attend(req, res) {
-    const { hash, longitude, latitude, date } = req.body;
+    const { hash, longitude, latitude } = req.body;
     try {
       const qrCode = await QrCodeServices.getQrCode(hash);
       if (!qrCode) {
         util.setError(404, "No qrCode found");
       } else {
         if (qrCode.dataValues.valid) {
-          if (
-            QrCodeServices.validLocation(qrCode.dataValues, longitude, latitude)
-          ) {
-            util.setSuccess(200, "Attendance request has been verified");
+          if (qrCode.dataValues.applyChecks && longitude && latitude) {
+            if (
+              QrCodeServices.validLocation(
+                qrCode.dataValues,
+                longitude,
+                latitude
+              )
+            ) {
+              util.setSuccess(200, "Attendance request has been verified");
+            } else {
+              util.setError(400, "Your location is too far");
+            }
+          } else if (qrCode.dataValues.applyChecks && !longitude && !latitude) {
+            util.setError(400, "Location must be sent");
           } else {
-            util.setError(400, "Your location is too far");
+            util.setSuccess(200, "Attendance request has been verified");
           }
         } else {
           util.setError(400, "This QrCode is no longer valid");

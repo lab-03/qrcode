@@ -10,6 +10,11 @@ module.exports = {
       },
       location: {
         type: Sequelize.GEOMETRY("POINT", 4326),
+        allowNull: true
+      },
+      applyChecks: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: true,
         allowNull: false
       },
       hash: {

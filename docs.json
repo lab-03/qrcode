@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "version": "2.1.1",
+    "version": "2.2.1",
     "title": "QrCode",
     "description": "QrCode service"
   },
@@ -29,7 +29,8 @@
             "application/json": {
               "schema": {
                 "example": {
-                  "hash": "#HASDIONJifbw39edsa8dasffsd",
+                  "hash": "6ebd4446e59a02f5b57c96a600e8ecb3c2281ead",
+                  "applyChecks": true,
                   "longitude": "10.807222",
                   "latitude": "-90.984722"
                 }
@@ -84,18 +85,17 @@
                         "type": "Point",
                         "coordinates": [10.807222, -90.984722]
                       },
-                      "hash": "asndkWOMODMasmdao@#!$#!$fasdafs",
+                      "hash": "fc03de7994d031cf0ff7d61f57ba68e0e8630a8b",
                       "valid": true,
+                      "applyChecks": true,
                       "createdAt": "2020-02-15T16:45:27.981Z",
                       "updatedAt": "2020-02-15T16:45:27.981Z"
                     },
                     {
-                      "location": {
-                        "type": "Point",
-                        "coordinates": [10.807222, -90.984722]
-                      },
-                      "hash": "asndkWfasdafs",
+                      "location": null,
+                      "hash": "6ebd4446e59a02f5b57c96a600e8ecb3c2281ead",
                       "valid": false,
+                      "applyChecks": false,
                       "createdAt": "2020-02-15T17:45:27.981Z",
                       "updatedAt": "2020-02-15T17:45:27.981Z"
                     }
@@ -139,7 +139,7 @@
             "application/json": {
               "schema": {
                 "example": {
-                  "hash": "#HASDIONJifbw39edsa8dasffsd"
+                  "hash": "6ebd4446e59a02f5b57c96a600e8ecb3c2281ead"
                 }
               }
             }
@@ -160,8 +160,9 @@
                         "type": "Point",
                         "coordinates": [10.807222, -90.984722]
                       },
-                      "hash": "asndasdasdm",
+                      "hash": "fc03de7994d031cf0ff7d61f57ba68e0e8630a8b",
                       "valid": true,
+                      "applyChecks": true,
                       "createdAt": "2020-02-15T16:45:27.981Z",
                       "updatedAt": "2020-02-15T16:45:27.981Z"
                     }
@@ -205,7 +206,7 @@
             "application/json": {
               "schema": {
                 "example": {
-                  "hash": "#HASDIONJifbw39edsa8dasffsd"
+                  "hash": "6ebd4446e59a02f5b57c96a600e8ecb3c2281ead"
                 }
               }
             }
@@ -259,7 +260,7 @@
             "application/json": {
               "schema": {
                 "example": {
-                  "hash": "#HASDIONJifbw39edsa8dasffsd"
+                  "hash": "6ebd4446e59a02f5b57c96a600e8ecb3c2281ead"
                 }
               }
             }
@@ -313,7 +314,7 @@
             "application/json": {
               "schema": {
                 "example": {
-                  "hash": "#HASDIONJifbw39edsa8dasffsd",
+                  "hash": "6ebd4446e59a02f5b57c96a600e8ecb3c2281ead",
                   "longitude": "10.807222",
                   "latitude": "-90.984722"
                 }

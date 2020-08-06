@@ -122,7 +122,7 @@ describe("DELETE /api/qrcodes/delete", () => {
 });
 
 describe("POST /api/qrcodes/create", () => {
-  it("should create a qr", done => {
+  it("should create and save a QrCode in the database with a location value", done => {
     let data = {
       hash,
       longitude,
@@ -139,6 +139,22 @@ describe("POST /api/qrcodes/create", () => {
         else done();
       });
   }),
+    it("should create and save a QrCode in the database without a location value provided", done => {
+      let data = {
+        hash: crypto.randomBytes(20).toString("hex"),
+        applyChecks: false
+      };
+      chai
+        .request(server)
+        .post("/api/qrcodes/create")
+        .send(data)
+        .end((err, res) => {
+          res.should.have.status(200);
+          assert.equal(res.body.message, "QrCode created");
+          if (err) done(err);
+          else done();
+        });
+    }),
     it("should fail to save the QrCode in the database because the same hash exists", done => {
       let data = {
         hash,
@@ -171,22 +187,6 @@ describe("POST /api/qrcodes/create", () => {
           if (err) done(err);
           else done();
         });
-    }),
-    it("should fail to save the QrCode in the database because the latitude or longitude or both equal null", done => {
-      let data = {
-        hash,
-        latitude
-      };
-      chai
-        .request(server)
-        .post("/api/qrcodes/create")
-        .send(data)
-        .end((err, res) => {
-          res.should.have.status(400);
-          assert.equal(res.body.message.name, "SequelizeValidationError");
-          if (err) done(err);
-          else done();
-        });
     });
 });
 
@@ -206,7 +206,7 @@ describe("PUT /api/qrcodes/end", () => {
         done();
       });
   });
-  it("should successfully invalidate a qrCode", done => {
+  it("should successfully invalidate a QrCode", done => {
     let data = {
       hash: tempHash
     };
@@ -221,7 +221,7 @@ describe("PUT /api/qrcodes/end", () => {
         else done();
       });
   }),
-    it("should fail at invalidating the qrCode because it doesn't exist", done => {
+    it("should fail at invalidating the QrCode because it doesn't exist", done => {
       let data = {
         hash: crypto.randomBytes(20).toString("hex")
       };
@@ -238,7 +238,22 @@ describe("PUT /api/qrcodes/end", () => {
     });
 });
 describe("POST /api/qrcodes/attend", () => {
-  it("should attend a student", done => {
+  let uncheckableHash = crypto.randomBytes(20).toString("hex");
+  before(function(done) {
+    let data = {
+      hash: uncheckableHash,
+      applyChecks: false
+    };
+    chai
+      .request(server)
+      .post("/api/qrcodes/create")
+      .send(data)
+      .end((err, res) => {
+        done();
+      });
+  });
+
+  it("should attend a student after a location check", done => {
     let data = {
       hash,
       longitude,
@@ -255,9 +270,39 @@ describe("POST /api/qrcodes/attend", () => {
         else done();
       });
   });
-});
+  it("should attend a student without checking the location", done => {
+    let data = {
+      hash: uncheckableHash
+    };
+    chai
+      .request(server)
+      .post("/api/qrcodes/attend")
+      .send(data)
+      .end((err, res) => {
+        console.log(res.body.message);
+        res.should.have.status(200);
+        assert.equal(res.body.message, "Attendance request has been verified");
+        if (err) done(err);
+        else done();
+      });
+  });
 
-describe("POST /api/qrcodes/attend", () => {
+  it("should NOT attend a student because the location must be sent to be checked", done => {
+    let data = {
+      hash
+    };
+    chai
+      .request(server)
+      .post("/api/qrcodes/attend")
+      .send(data)
+      .end((err, res) => {
+        res.should.have.status(400);
+        assert.equal(res.body.message, "Location must be sent");
+        if (err) done(err);
+        else done();
+      });
+  });
+
   it("should NOT attend a student because the QrCode doesn't exist", done => {
     let data = {
       hash: " ",
@@ -275,9 +320,7 @@ describe("POST /api/qrcodes/attend", () => {
         else done();
       });
   });
-});
 
-describe("POST /api/qrcodes/attend", () => {
   it("should NOT attend a student because the location is too far", done => {
     let data = {
       hash,
@@ -295,8 +338,7 @@ describe("POST /api/qrcodes/attend", () => {
         else done();
       });
   });
-});
-describe("POST /api/qrcodes/attend", () => {
+
   it("should NOT attend a student because the location is too far", done => {
     let data = {
       hash,
@@ -329,7 +371,7 @@ describe("POST /api/qrcodes/attend", () => {
         done();
       });
   });
-  it("should not attend a student because the qrCode is no longer valid", done => {
+  it("should NOT attend a student because the QrCode is no longer valid", done => {
     let data = {
       hash,
       longitude,

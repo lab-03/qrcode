@@ -1,11 +1,12 @@
 {
   "name": "QrCode",
-  "version": "2.1.1",
+  "version": "2.2.1",
   "description": "QrCode service",
   "main": "server.js",
   "repository": "https://github.com/lab-03/qrcode",
   "scripts": {
     "test": "export NODE_ENV=test && cd ./database && sequelize --url $DB_TEST_URL db:migrate && cd .. && nyc mocha --timeout 15000 --require babel-register tests/test --exit",
+    "dev-test": "export NODE_ENV=test && nyc mocha --timeout 15000 --require babel-register tests/test --exit",
     "start": "export NODE_ENV=production && babel-node --presets es2015 server.js",
     "dev": "nodemon server.js --exec babel-node --"
   },

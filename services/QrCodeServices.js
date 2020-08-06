@@ -35,21 +35,21 @@ class QrCodesService {
     }
   }
   static async addQrCode(data) {
-    const { longitude, latitude, hash } = data;
-    let location = {
-      type: "Point",
-      coordinates: [longitude, latitude],
-      crs: { type: "name", properties: { name: "EPSG:4326" } }
-    };
-
-    if (!longitude || !latitude) {
-      location = null;
+    const { longitude, latitude, hash, applyChecks } = data;
+    let location = null;
+    if (longitude && latitude) {
+      location = {
+        type: "Point",
+        coordinates: [longitude, latitude],
+        crs: { type: "name", properties: { name: "EPSG:4326" } }
+      };
     }
 
     try {
       return await QrCodes.create({
         location,
-        hash
+        hash,
+        applyChecks
       });
     } catch (err) {
       throw err;

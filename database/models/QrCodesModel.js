@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       location: {
         type: DataTypes.GEOMETRY("POINT", 4326),
-        allowNull: false
+        allowNull: true
       },
       hash: {
         type: DataTypes.STRING,
@@ -13,6 +13,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       },
       valid: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+        allowNull: false
+      },
+      applyChecks: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
         allowNull: false
